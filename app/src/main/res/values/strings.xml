@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Chocolate Muffin</string>
+    <string name="buy">Buy Now</string>
+    <string name="buy_with">Buy with %1$s</string>
+    <string name="price">Choose Price:</string>
+    <string name="default_price">10</string>
+    <string name="from">Buy from:</string>
+    <string name="number">number</string>
+    <string name="default_currency">Ksh</string>
+    <string name="default_pay_option">Phone Number</string>
+    <string name="default_service_name">Safaricom M-PESA</string>
+</resources>
