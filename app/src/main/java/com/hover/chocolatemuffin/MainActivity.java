@@ -33,7 +33,14 @@ public class MainActivity extends AppCompatActivity implements HoverIntegration.
 		fillViews();
 	}
 
-	private void addHoverIntegration() { HoverIntegration.add(8, Permission.NORMAL, this, this); }
+	@Override
+	protected void onNewIntent(Intent intent) {
+		if (intent.getAction().equals("com.hover.chocolatemuffin.CONFIRMED_TRANSACTION")) {
+			updateRunningTotal();
+		}
+	}
+
+	private void addHoverIntegration() { HoverIntegration.add(new int[] {3, 4, 5, 6, 7, 8, 11, 14, 15, 16, 13, 17, 19, 20}, Permission.NORMAL, this, this); }
 
 	@Override public void onSIMError(String message) { Log.d(TAG, "Sim error: " + message); }
 	@Override public void onError(String message) {
@@ -68,6 +75,13 @@ public class MainActivity extends AppCompatActivity implements HoverIntegration.
 						.build());
 	}
 
+	private void updateRunningTotal() {
+		String totalString = getString(R.string.no_running_total);
+		if (Utils.getMuffinCount(this) > 0)
+			totalString = getResources().getQuantityString(R.plurals.running_total, Utils.getMuffinCount(this), Utils.getTotalSpent(this), Utils.getCurrency(this), Utils.getMuffinCount(this));
+		((TextView) findViewById(R.id.running_total)).setText(totalString);
+	}
+
 	@Override
 	protected void onActivityResult (int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -77,11 +91,7 @@ public class MainActivity extends AppCompatActivity implements HoverIntegration.
 		else if (requestCode == PERM_REQUEST)
 			onUserDenied();
 		else if (requestCode == BUY_REQUEST)
-			hoverResult(requestCode, resultCode, data);
-	}
-
-	private void hoverResult(int requestCode, int resultCode, Intent data) {
-
+			((BuyButton) findViewById(R.id.hover_button)).onActivityResult(requestCode, resultCode, data);
 	}
 
 	private BuyButtonCallback mBtnCallbacks = new BuyButtonCallback() {
@@ -117,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements HoverIntegration.
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(this);
+		updateRunningTotal();
 	}
 	public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
 		Utils.setPayOption((String) parent.getItemAtPosition(pos), this);

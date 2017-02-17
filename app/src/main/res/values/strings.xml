@@ -9,4 +9,12 @@
     <string name="default_currency">Ksh</string>
     <string name="default_pay_option">Phone Number</string>
     <string name="default_service_name">Safaricom M-PESA</string>
+    <string name="no_running_total">Come on, you know you want to buy a muffin</string>
+    <plurals name="running_total">
+        <item quantity="one">You\'ve spent %1$d %2$s on %3$d muffin!</item>
+        <item quantity="other">You\'ve spent %1$d %2$s on %3$d muffins!</item>
+    </plurals>
+    <string name="successfully_bought">You bought a muffin for %1$s. Enjoy!</string>
+
+    <string name="error_receiver">Something went wrong parsing the response.</string>
 </resources>

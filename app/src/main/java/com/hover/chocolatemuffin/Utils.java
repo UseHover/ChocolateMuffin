@@ -4,11 +4,26 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class Utils {
-	public static final String TAG = "Utils", CURRENCY = "currency", PRICE = "price",
-			RECIP = "recip", PAY_OPTION = "pay_option", SERVICE_ID = "serviceId", SERVICE_NAME = "service_name";
+	public static final String TAG = "Utils", CURRENCY = "currency", PRICE = "price", RECIP = "recip",
+			PAY_OPTION = "pay_option", SERVICE_ID = "serviceId", SERVICE_NAME = "service_name",
+			MUFFIN_COUNT = "muffin_count", TOTAL_SPENT = "total_spent";
 
 	public static SharedPreferences getSharedPrefs(Context context) {
 		return context.getSharedPreferences(context.getPackageName() + "_prefs", Context.MODE_MULTI_PROCESS);
+	}
+
+	public static int getTotalSpent(Context c) { return Utils.getSharedPrefs(c).getInt(TOTAL_SPENT, 0); }
+	public static void increaseTotalSpent(int value, Context c) {
+		SharedPreferences.Editor editor = Utils.getSharedPrefs(c).edit();
+		editor.putInt(TOTAL_SPENT, getTotalSpent(c) + value);
+		editor.commit();
+	}
+
+	public static int getMuffinCount(Context c) { return Utils.getSharedPrefs(c).getInt(MUFFIN_COUNT, 0); }
+	public static void increaseMuffinCount(Context c) {
+		SharedPreferences.Editor editor = Utils.getSharedPrefs(c).edit();
+		editor.putInt(MUFFIN_COUNT, getMuffinCount(c) + 1);
+		editor.commit();
 	}
 
 	public static void setServiceId(int value, Context c) {

@@ -16,6 +16,15 @@
         android:gravity="center"
         tools:context="com.hover.chocolatemuffin.MainActivity">
 
+        <TextView android:id="@+id/running_total"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center_vertical|start"
+                  android:layout_marginBottom="@dimen/activity_vertical_margin"
+                  android:textSize="14sp"
+                  android:textColor="@color/text"
+                  android:text="@string/no_running_total"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,7 +100,6 @@
             android:background="@color/colorAccent"
             android:textColor="@color/white"
             android:text="@string/buy" />
-
 
     </LinearLayout>
 </ScrollView>
