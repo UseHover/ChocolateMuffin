@@ -22,12 +22,14 @@
                   android:layout_marginBottom="@dimen/activity_vertical_margin"
                   android:textSize="14sp"
                   android:textColor="@color/text"
-                  android:text="@string/no_running_total"/>
+                  android:text="@string/no_running_total"
+        android:visibility="visible"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start">
+            android:gravity="start"
+            android:visibility="visible">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,7 +61,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start">
+            android:gravity="start"
+            android:visibility="visible">
 
             <TextView
                 android:layout_width="wrap_content"
