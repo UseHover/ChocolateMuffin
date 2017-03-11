@@ -34,6 +34,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
-    compile('com.hover:android-sdk:0.12.0@aar') { transitive = true; }
+    compile('com.hover:android-sdk:0.12.2@aar') { transitive = true; }
 //    compile(project(':hover.sdk')) { transitive = true; }
 }

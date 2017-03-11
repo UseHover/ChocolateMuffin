@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 	private void addHoverIntegration() {
 		Intent integrationIntent = new Intent(this, HoverIntegrationActivity.class);
-		integrationIntent.putExtra(HoverIntegrationActivity.SERVICE_IDS, new int[] { 8 });
+		integrationIntent.putExtra(HoverIntegrationActivity.SERVICE_IDS, new int[] { 11 });
 		integrationIntent.putExtra(HoverIntegrationActivity.PERM_LEVEL, Permission.NORMAL);
 		startActivityForResult(integrationIntent, PERM_REQUEST);
 //		HoverIntegration.add(new int[] {3, 4, 5, 6, 7, 8, 11, 14, 15, 16, 13, 17, 19, 20}, Permission.NORMAL, this, this);
