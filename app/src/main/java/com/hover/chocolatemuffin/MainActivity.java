@@ -1,6 +1,9 @@
 package com.hover.chocolatemuffin;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,7 +24,7 @@ import com.hover.sdk.onboarding.HoverIntegrationActivity;
 import com.hover.sdk.operators.Permission;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-	public static String TAG = "Main Activity";
+	public static String TAG = "Main Activity", RECIP = "+255752836781";
 	public static final int PERM_REQUEST = 0, BUY_REQUEST = 1;
 
 	@Override
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 	private void addHoverIntegration() {
 		Intent integrationIntent = new Intent(this, HoverIntegrationActivity.class);
-		integrationIntent.putExtra(HoverIntegrationActivity.SERVICE_IDS, new int[] { 11 });
+		integrationIntent.putExtra(HoverIntegrationActivity.SERVICE_IDS, new int[] { 3, 4, 5, 6, 7, 8, 11, 14, 15, 16, 13, 17, 19, 20 });
 		integrationIntent.putExtra(HoverIntegrationActivity.PERM_LEVEL, Permission.NORMAL);
 		startActivityForResult(integrationIntent, PERM_REQUEST);
 //		HoverIntegration.add(new int[] {3, 4, 5, 6, 7, 8, 11, 14, 15, 16, 13, 17, 19, 20}, Permission.NORMAL, this, this);
@@ -52,15 +55,28 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 		switch (Utils.getPayOption(this)) {
 			case "Pay Bill": request = "pay_bill"; break;
 			case "Merchant Till": request = "pay_merchant"; break;
-			default: request = "send";
+			default: request = "send_money";
 		}
 		BuyButton btn = ((BuyButton) findViewById(R.id.hover_button));
-		btn.setText(getString(R.string.buy_with, "Wave Money"));
+		btn.setText(getString(R.string.buy_with, Utils.getServiceName(this)));
 		btn.setBuyParameters(
 				new HoverParameters.Builder(this)
 						.request(request, Utils.getPrice(this), Utils.getCurrency(this), Utils.getRecip(this))
 						.from(Utils.getServiceId(this))
 						.build(), BUY_REQUEST);
+	}
+
+	public void launchInstructionDialog(View view) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Payment Instructions")
+				.setMessage("Dial *150*00# choose MPESA then Send Money. Enter " + RECIP + " for the recipient, " + Utils.getPrice(this) + " Tsh for amount, then enter your pin and confirm");
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.dismiss();
+			}
+		});
+		AlertDialog dialog = builder.create();
+		dialog.show();
 	}
 
 	private void updateRunningTotal() {

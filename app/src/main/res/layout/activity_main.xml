@@ -92,6 +92,18 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/chocolate_muffin"/>
 
+        <!--<Button-->
+            <!--android:id="@+id/hover_button"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:gravity="center"-->
+            <!--android:textSize="16sp"-->
+            <!--android:background="@color/colorAccent"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:text="@string/buy"-->
+            <!--android:onClick="launchInstructionDialog"/>-->
+
         <com.hover.sdk.buttons.BuyButton
             android:id="@+id/hover_button"
             android:layout_width="wrap_content"
