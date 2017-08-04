@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.hover.sdk.buttons.BuyButton;
 import com.hover.sdk.buttons.BuyButtonCallback;
-import com.hover.sdk.onboarding.HoverIntegrationActivity;
 import com.hover.sdk.main.HoverParameters;
+import com.hover.sdk.onboarding.HoverIntegrationActivity;
 import com.hover.sdk.operators.Permission;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {

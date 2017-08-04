@@ -1,1 +1,1 @@
-include ':app', ':hover.sdk'
+include ':app'
