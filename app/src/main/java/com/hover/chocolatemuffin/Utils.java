@@ -58,7 +58,7 @@ public class Utils {
 		editor.putString(RECIP, value);
 		editor.commit();
 	}
-	public static String getRecip(Context c) { return Utils.getSharedPrefs(c).getString(RECIP, ""); }
+	public static String getRecip(Context c) { return Utils.getSharedPrefs(c).getString(RECIP, MainActivity.RECIP); }
 
 	public static void setPayOption(String value, Context c) {
 		SharedPreferences.Editor editor = Utils.getSharedPrefs(c).edit();

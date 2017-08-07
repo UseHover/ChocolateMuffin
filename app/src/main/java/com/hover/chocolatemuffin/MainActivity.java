@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,11 +35,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 		setContentView(R.layout.activity_main);
 		addHoverIntegration();
 		fillViews();
+		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 	}
 
 	@Override
 	protected void onNewIntent(Intent intent) {
 		if (intent.getAction().equals("com.hover.chocolatemuffin.CONFIRMED_TRANSACTION")) {
+			muffinBought();
 			updateRunningTotal();
 		}
 	}
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 		Intent integrationIntent = new Intent(this, HoverIntegrationActivity.class);
 		integrationIntent.putExtra(HoverIntegrationActivity.SERVICE_IDS, new int[] { 3, 4, 5, 6, 7, 8, 11, 14, 15, 16, 13, 17, 19, 20 });
 		integrationIntent.putExtra(HoverIntegrationActivity.PERM_LEVEL, Permission.NORMAL);
+		integrationIntent.putExtra(HoverIntegrationActivity.PRIMARY_COLOR, R.color.colorPrimary);
 		startActivityForResult(integrationIntent, PERM_REQUEST);
 //		HoverIntegration.add(new int[] {3, 4, 5, 6, 7, 8, 11, 14, 15, 16, 13, 17, 19, 20}, Permission.NORMAL, this, this);
 	}
@@ -77,6 +82,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 		});
 		AlertDialog dialog = builder.create();
 		dialog.show();
+	}
+
+	private void muffinBought() {
+		((ImageView) findViewById(R.id.muffin_image)).setImageResource(R.drawable.exploded_muffin);
+		((BuyButton) findViewById(R.id.hover_button)).setText("Bought!");
 	}
 
 	private void updateRunningTotal() {
