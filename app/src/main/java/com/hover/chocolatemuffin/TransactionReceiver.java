@@ -14,7 +14,7 @@ public class TransactionReceiver extends BroadcastReceiver {
 			if (intent.hasExtra("amount"))
 				Utils.increaseTotalSpent(Float.valueOf(intent.getStringExtra("amount")).intValue(), context);
 			Utils.increaseMuffinCount(context);
-			Toast.makeText(context, context.getString(R.string.successfully_bought, intent.getStringExtra("amount")), Toast.LENGTH_LONG).show();
+//			Toast.makeText(context, context.getString(R.string.successfully_bought, intent.getStringExtra("amount")), Toast.LENGTH_LONG).show();
 		} catch (Exception e) {
 			Toast.makeText(context, context.getString(R.string.error_receiver), Toast.LENGTH_LONG).show();
 		}

@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:id="@+id/activity_main"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="bottom"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.hover.chocolatemuffin.MainActivity">
 
     <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -53,6 +53,7 @@
                           android:textColorHighlight="@color/colorPrimary"
                           android:selectAllOnFocus="false"
                           android:inputType="numberDecimal"
+                          android:focusedByDefault="false"
                           android:textSize="16sp"
                           android:textStyle="bold"
                           android:text="@string/default_price"/>
@@ -91,10 +92,11 @@
                 android:textSize="14sp"
                 android:textColor="@color/text"
                 android:text="@string/from"/>
-            <android.support.v7.widget.AppCompatSpinner android:id="@+id/payment_type"
+
+            <Spinner android:id="@+id/payment_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-            </android.support.v7.widget.AppCompatSpinner>
+            </Spinner>
 
             <EditText android:id="@+id/recipient"
                 android:layout_width="wrap_content"
@@ -105,39 +107,40 @@
                 android:selectAllOnFocus="false"
                 android:inputType="number"
                 android:hint="@string/number"/>
-
         </LinearLayout>
 
-        <ImageView android:id="@+id/muffin_image"
-            android:layout_width="200dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_gravity="center|bottom"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/whole_muffin" />
+    <!--<Button android:id="@+id/hover_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="@dimen/activity_vertical_margin"-->
+        <!--android:layout_marginBottom="@dimen/activity_vertical_margin"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:textSize="16sp"-->
+        <!--android:background="@color/colorAccent"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:text="@string/buy"-->
+        <!--android:onClick="launchInstructionDialog"/>-->
 
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="@dimen/activity_vertical_margin"-->
-            <!--android:layout_marginBottom="@dimen/activity_vertical_margin"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:textSize="16sp"-->
-            <!--android:background="@color/colorAccent"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:text="@string/buy"-->
-            <!--android:onClick="launchInstructionDialog"/>-->
+    <com.hover.sdk.buttons.BuyButton
+        android:id="@+id/hover_button"
+        style="@style/HoverButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_gravity="center"
+        android:textSize="16sp"
+        android:background="@color/colorAccent"
+        android:textColor="@color/white"
+        android:text="@string/buy"
+        android:visibility="visible"/>
 
-        <com.hover.sdk.buttons.BuyButton
-            android:id="@+id/hover_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_gravity="center"
-            android:textSize="16sp"
-            android:background="@color/colorAccent"
-            android:textColor="@color/white"
-            android:text="@string/buy" />
-
+    <ImageView android:id="@+id/muffin_image"
+        android:layout_width="200dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/activity_small_margin"
+        android:layout_weight="1"
+        android:layout_gravity="center|bottom"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/whole_muffin_orange" />
 </LinearLayout>

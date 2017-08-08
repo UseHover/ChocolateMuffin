@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 	}
 
 	private void muffinBought() {
-		((ImageView) findViewById(R.id.muffin_image)).setImageResource(R.drawable.exploded_muffin);
+		((ImageView) findViewById(R.id.muffin_image)).setImageResource(R.drawable.exploded_muffin_orange);
 		((BuyButton) findViewById(R.id.hover_button)).setText("Bought!");
 	}
 
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 		}
 
 		@Override public void onServiceProcessing(String s, int i) {
-			Toast.makeText(MainActivity.this, "Processing...\n " + s, Toast.LENGTH_LONG).show();
+//			Toast.makeText(MainActivity.this, "Processing...\n " + s, Toast.LENGTH_LONG).show();
 		}
 	};
 
