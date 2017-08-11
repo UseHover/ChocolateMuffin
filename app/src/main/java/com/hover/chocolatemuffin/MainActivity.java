@@ -85,8 +85,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 	}
 
 	private void muffinBought() {
-		((ImageView) findViewById(R.id.muffin_image)).setImageResource(R.drawable.exploded_muffin_orange);
-		((BuyButton) findViewById(R.id.hover_button)).setText("Bought!");
+//		findViewById(R.id.background).setBackgroundResource(R.drawable.celebration);
+//		((ImageView) findViewById(R.id.muffin_image)).setImageResource(R.drawable.exploded_muffin_orange);
+		findViewById(R.id.hover_button).setVisibility(View.GONE);
+		findViewById(R.id.success_msg).setVisibility(View.VISIBLE);
 	}
 
 	private void updateRunningTotal() {
