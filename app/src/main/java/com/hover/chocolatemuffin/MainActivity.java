@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -82,6 +83,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 		});
 		AlertDialog dialog = builder.create();
 		dialog.show();
+
+		Intent i = new HoverParameters.Builder(this)
+				.request("send_money", Utils.getPrice(this), Utils.getCurrency(this), Utils.getRecip(this))
+				.from(Utils.getServiceId(this))
+				.buildIntent();
+		startActivityForResult(i, BUY_REQUEST);
 	}
 
 	private void muffinBought() {
@@ -118,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 		((TextView) findViewById(R.id.currency)).setText(data.getStringExtra("currency"));
 
 		updateParams();
-		((BuyButton) findViewById(R.id.hover_button)).setCallback(mBtnCallbacks);
+//		((BuyButton) findViewById(R.id.hover_button)).setCallback(mBtnCallbacks);
 	}
 
 	public void onUserCanceled() { Log.d(TAG, "User canceled"); }
