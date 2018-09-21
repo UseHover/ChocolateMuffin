@@ -1,6 +1,5 @@
 package com.hover.chocolatemuffin;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -15,16 +14,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hover.sdk.buttons.BuyButton;
-import com.hover.sdk.buttons.BuyButtonCallback;
-import com.hover.sdk.main.HoverParameters;
-import com.hover.sdk.onboarding.HoverIntegrationActivity;
-import com.hover.sdk.operators.Permission;
+import com.hover.sdk.api.Hover;
+import com.hover.sdk.api.HoverParameters;
+
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 	public static String TAG = "Main Activity", RECIP = "+255752836781";
@@ -34,9 +30,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		addHoverIntegration();
+		Hover.initialize(this);
 		fillViews();
 		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
 	}
 
 	@Override
@@ -47,15 +44,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 		}
 	}
 
-	private void addHoverIntegration() {
-		Intent integrationIntent = new Intent(this, HoverIntegrationActivity.class);
-		integrationIntent.putExtra(HoverIntegrationActivity.SERVICE_IDS, new int[] { 3, 4, 5, 6, 7, 8, 11, 14, 15, 16, 13, 17, 19, 20 });
-		integrationIntent.putExtra(HoverIntegrationActivity.PERM_LEVEL, Permission.NORMAL);
-		integrationIntent.putExtra(HoverIntegrationActivity.PRIMARY_COLOR, R.color.colorPrimary);
-		startActivityForResult(integrationIntent, PERM_REQUEST);
-//		HoverIntegration.add(new int[] {3, 4, 5, 6, 7, 8, 11, 14, 15, 16, 13, 17, 19, 20}, Permission.NORMAL, this, this);
-	}
-
 	private void updateParams() {
 		String request;
 		switch (Utils.getPayOption(this)) {
@@ -63,13 +51,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 			case "Merchant Till": request = "pay_merchant"; break;
 			default: request = "send_money";
 		}
-		BuyButton btn = ((BuyButton) findViewById(R.id.hover_button));
+		Button btn = ((Button) findViewById(R.id.hover_button));
 		btn.setText(getString(R.string.buy_with, Utils.getServiceName(this)));
-		btn.setBuyParameters(
-				new HoverParameters.Builder(this)
-						.request(request, Utils.getPrice(this), Utils.getCurrency(this), Utils.getRecip(this))
-						.from(Utils.getServiceId(this))
-						.build(), BUY_REQUEST);
+	}
+
+	public void buy(View view) {
+		launchHover("1e5926fc");
+	}
+
+	private void launchHover(String request) {
+		Intent i = new HoverParameters.Builder(this)
+				.request(request)
+				.extra("amount", Utils.getPrice(this))
+				.extra("recipient", Utils.getRecip(this))
+				.buildIntent();
+		startActivityForResult(i, BUY_REQUEST);
 	}
 
 	public void launchInstructionDialog(View view) {
@@ -84,11 +80,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 		AlertDialog dialog = builder.create();
 		dialog.show();
 
-		Intent i = new HoverParameters.Builder(this)
-				.request("send_money", Utils.getPrice(this), Utils.getCurrency(this), Utils.getRecip(this))
-				.from(Utils.getServiceId(this))
-				.buildIntent();
-		startActivityForResult(i, BUY_REQUEST);
+		buy(null);
 	}
 
 	private void muffinBought() {
@@ -113,8 +105,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 			onSuccess(data);
 		else if (requestCode == PERM_REQUEST)
 			onUserCanceled();
-		else if (requestCode == BUY_REQUEST)
-			((BuyButton) findViewById(R.id.hover_button)).onActivityResult(requestCode, resultCode, data);
+		else if (requestCode == BUY_REQUEST && resultCode == RESULT_OK)
+			Toast.makeText(MainActivity.this, "Please wait for confirmation", Toast.LENGTH_LONG).show();
+		else if (requestCode == BUY_REQUEST && resultCode == RESULT_CANCELED)
+			Toast.makeText(MainActivity.this, "Error: " + data.getStringExtra("error"), Toast.LENGTH_LONG).show();
 	}
 
 	public void onSuccess(Intent data) {
@@ -129,24 +123,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 	}
 
 	public void onUserCanceled() { Log.d(TAG, "User canceled"); }
-
-	private BuyButtonCallback mBtnCallbacks = new BuyButtonCallback() {
-		@Override public void onError(Throwable throwable) {
-			Toast.makeText(MainActivity.this, "Fatal error: " + throwable.toString(), Toast.LENGTH_LONG).show();
-		}
-
-		@Override public void onValidationError(String s) {
-			Toast.makeText(MainActivity.this, "Validation error: " + s, Toast.LENGTH_LONG).show();
-		}
-
-		@Override public void onServiceError(String s) {
-			Toast.makeText(MainActivity.this, "Service returned error: " + s, Toast.LENGTH_LONG).show();
-		}
-
-		@Override public void onServiceProcessing(String s, int i) {
-//			Toast.makeText(MainActivity.this, "Processing...\n " + s, Toast.LENGTH_LONG).show();
-		}
-	};
 
 	private void fillViews() {
 		((TextView) findViewById(R.id.currency)).setText(Utils.getCurrency(this));

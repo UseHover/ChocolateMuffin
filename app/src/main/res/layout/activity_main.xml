@@ -132,9 +132,8 @@
             <!--android:text="@string/buy"-->
             <!--android:onClick="launchInstructionDialog"/>-->
 
-            <com.hover.sdk.buttons.BuyButton
+            <Button
                 android:id="@+id/hover_button"
-                style="@style/HoverButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -146,7 +145,8 @@
                 android:background="@color/colorAccent"
                 android:textColor="@color/white"
                 android:text="@string/buy"
-                android:visibility="visible"/>
+                android:visibility="visible"
+                android:onClick="buy"/>
 
             <TextView android:id="@+id/success_msg"
                 android:layout_width="wrap_content"
